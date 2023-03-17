@@ -25,7 +25,7 @@ public class LocalBackend implements Backend {
     }
 
     @Override
-    public boolean rate(Long restaurantId, RateDTO rateDTO) {
+    public boolean rate(Long restaurantId, RateRequest rateDTO) {
         return false;
     }
 

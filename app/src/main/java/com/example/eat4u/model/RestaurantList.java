@@ -1,11 +1,15 @@
 package com.example.eat4u.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public record RestaurantList(
-        List<Restaurant> restaurants
-) {
+public class RestaurantList {
+    private List<Restaurant> restaurants = new ArrayList<>();
+
+    public RestaurantList(List<Restaurant> restaurants) {
+        this.restaurants.addAll(restaurants);
+    }
 
     public RestaurantList(Restaurant... restaurants) {
         this(Arrays.asList(restaurants));
