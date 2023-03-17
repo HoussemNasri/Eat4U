@@ -1,6 +1,6 @@
 package com.example.eat4u.model;
 
-public enum QualityRating {
+public enum Quality {
     EXCELLENT,
     GOOD,
     AVERAGE,
