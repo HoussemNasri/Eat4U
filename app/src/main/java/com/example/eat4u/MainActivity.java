@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.example.eat4u.model.Quality;
 import com.example.eat4u.model.Restaurant;
+import com.example.eat4u.model.RestaurantRating;
+import com.example.eat4u.model.Stars;
+import com.example.eat4u.model.User;
 import com.example.eat4u.network.db.DatabaseHelper;
 
-import java.util.Collections;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,10 +23,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try (DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext())) {
-            Restaurant r1 = new Restaurant(100L, "SANDWICH KING", "100 S Marion St, Oak Park, IL 60302", Collections.emptyList());
-            Restaurant r2 = new Restaurant(205L, "SUGAR RUSH", "8360 Melrose Ave #107, Los Angeles, CA 90069", Collections.emptyList());
-            Restaurant r3 = new Restaurant(303L, "CHEF HUNTER", "2829 Ala Kalanikaumaka St. #G-149, Koloa, Kauai, HI 96756", Collections.emptyList());
-            var task = new AsyncTask<String, String, String>() {
+            User u1 = new User(455L, "Houssem", "Nasri", "houssem@gmail.com", "22222222");
+            User u2 = new User(421L, "Dhia", "Kassab", "kassab@gmail.com", "11111111");
+            RestaurantRating rating1 = new RestaurantRating(Quality.AVERAGE, Quality.GOOD, Stars.TWO, 2.25d, u1);
+
+            Restaurant r1 = new Restaurant(100L, "BURGER KING", "2489 San Diego Ave, San Diego, CA 92110");
+            Restaurant r2 = new Restaurant(122L, "Buenos Aires Pizzeria", "1307 22nd St, Denver, CO 80205");
+            Restaurant r3 = new Restaurant(302L, "Zola", "800 F. Street, NW, Washington, DC 20004");
+            new AsyncTask<String, String, String>() {
 
                 @Override
                 protected String doInBackground(String... strings) {
@@ -31,12 +38,10 @@ public class MainActivity extends AppCompatActivity {
                     databaseHelper.saveRestaurant(r2);
                     databaseHelper.saveRestaurant(r3);
 
-                    LOGGER.info("Added 3 new restaurants!");
+                    LOGGER.info("Added stuff to db");
                     return "";
                 }
-            };
-
-            task.execute("");
+            }.execute("");
 
         }
 

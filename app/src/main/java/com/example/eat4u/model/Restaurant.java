@@ -18,6 +18,10 @@ public class Restaurant {
         this.ratings.addAll(ratings);
     }
 
+    public Restaurant(Long id, String name, String address) {
+        this(id, name, address, Collections.emptyList());
+    }
+
     public Long getId() {
         return id;
     }
