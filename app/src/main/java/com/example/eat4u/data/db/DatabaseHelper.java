@@ -1,4 +1,4 @@
-package com.example.eat4u.network.db;
+package com.example.eat4u.data.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantRating;
 import com.example.eat4u.model.User;
-import com.example.eat4u.network.db.DatabaseContract.*;
+import com.example.eat4u.data.db.DatabaseContract.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "eat4u.db";
@@ -36,17 +36,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void saveRestaurant(Restaurant restaurant) {
-        SQLiteDatabase db = getWritableDatabase();
         ContentValues restaurantValues = new ContentValues();
         restaurantValues.put(RestaurantEntry._ID, restaurant.getId());
         restaurantValues.put(RestaurantEntry.COLUMN_NAME, restaurant.getName());
         restaurantValues.put(RestaurantEntry.COLUMN_ADDRESS, restaurant.getAddress());
 
+        SQLiteDatabase db = getWritableDatabase();
         db.insert(RestaurantEntry.TABLE_NAME, null, restaurantValues);
     }
 
     public void saveUser(User user) {
-        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UserEntry._ID, user.getId());
         values.put(UserEntry.COLUMN_FIRSTNAME, user.getFirstname());
@@ -54,11 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UserEntry.COLUMN_EMAIL, user.getEmail());
         values.put(UserEntry.COLUMN_PHONE, user.getPhone());
 
+        SQLiteDatabase db = getWritableDatabase();
         db.insert(UserEntry.TABLE_NAME, null, values);
     }
 
     public void addRating(Long restaurantId, RestaurantRating rating) {
-        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RestaurantRatingEntry.COLUMN_RESTAURANT_ID, restaurantId);
         values.put(RestaurantRatingEntry.COLUMN_RATER_ID, rating.getRater().getId());
@@ -67,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(RestaurantRatingEntry.COLUMN_AVERAGE_PRICE, rating.getAveragePrice());
         values.put(RestaurantRatingEntry.COLUMN_STARS, rating.getStars().toString());
 
+        SQLiteDatabase db = getWritableDatabase();
         db.insert(RestaurantRatingEntry.TABLE_NAME, null, values);
     }
 

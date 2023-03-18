@@ -1,4 +1,4 @@
-package com.example.eat4u.network.db;
+package com.example.eat4u.data.db;
 
 import android.provider.BaseColumns;
 

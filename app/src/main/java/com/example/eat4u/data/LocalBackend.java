@@ -1,4 +1,4 @@
-package com.example.eat4u.network;
+package com.example.eat4u.data;
 
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A mock implementation of the server backend that delivers data stored in a local sqlite database.
+ * A mock implementation of the backend server that stores data in a local sqlite database
  */
 public class LocalBackend implements Backend {
     private static final List<Restaurant> restaurants = new ArrayList<>();

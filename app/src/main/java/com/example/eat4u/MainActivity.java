@@ -10,7 +10,7 @@ import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantRating;
 import com.example.eat4u.model.Stars;
 import com.example.eat4u.model.User;
-import com.example.eat4u.network.db.DatabaseHelper;
+import com.example.eat4u.data.db.DatabaseHelper;
 
 import java.util.logging.Logger;
 

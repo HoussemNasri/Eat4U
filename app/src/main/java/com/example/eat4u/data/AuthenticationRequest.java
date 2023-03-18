@@ -1,4 +1,4 @@
-package com.example.eat4u.network;
+package com.example.eat4u.data;
 
 public class AuthenticationRequest {
 }

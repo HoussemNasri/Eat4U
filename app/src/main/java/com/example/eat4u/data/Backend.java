@@ -1,4 +1,4 @@
-package com.example.eat4u.network;
+package com.example.eat4u.data;
 
 import com.example.eat4u.model.RestaurantList;
 
