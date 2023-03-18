@@ -10,14 +10,10 @@ public interface DatabaseContract {
         String COLUMN_NAME = "name";
         String COLUMN_ADDRESS = "address";
 
-        String SQL_CREATE_TABLE = String.format("""
-                CREATE TABLE %s (
-                    %s INTEGER PRIMARY KEY,
-                    %s TEXT,
-                    %s TEXT
-                );
-                """, TABLE_NAME, _ID, COLUMN_NAME, COLUMN_ADDRESS);
-
+        String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + _ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME + " TEXT,"
+                + COLUMN_ADDRESS + " TEXT);";
         String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
@@ -28,15 +24,12 @@ public interface DatabaseContract {
         String COLUMN_EMAIL = "email";
         String COLUMN_PHONE = "phone";
 
-        String SQL_CREATE_TABLE = String.format("""
-                CREATE TABLE %s (
-                    %s INTEGER PRIMARY KEY,
-                    %s TEXT,
-                    %s TEXT,
-                    %s TEXT,
-                    %s TEXT,
-                );
-                """, TABLE_NAME, _ID, COLUMN_FIRSTNAME, COLUMN_LASTNAME, COLUMN_EMAIL, COLUMN_PHONE);
+        String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + _ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_FIRSTNAME + " TEXT,"
+                + COLUMN_LASTNAME + " TEXT,"
+                + COLUMN_EMAIL + " TEXT,"
+                + COLUMN_PHONE + " TEXT);";
 
         String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -50,21 +43,16 @@ public interface DatabaseContract {
         String COLUMN_AVERAGE_PRICE = "avg_price";
         String COLUMN_STARS = "stars";
 
-        String SQL_CREATE_TABLE = String.format("""
-                        CREATE TABLE %s (
-                            %s INTEGER
-                            %s INTEGER
-                            %s TEXT
-                            %s TEXT
-                            %s REAL
-                            %s STRING
-                            PRIMARY key (%s, %s)
-                            FOREIGN KEY (%s) REFERENCES %s (%s)
-                            FOREIGN KEY (%s) REFERENCES %s (%s)
-                        );
-                         """, TABLE_NAME, COLUMN_RESTAURANT_ID, COLUMN_RATER_ID, COLUMN_SERVICE_QUALITY, COLUMN_FOOD_QUALITY
-                , COLUMN_AVERAGE_PRICE, COLUMN_STARS, COLUMN_RESTAURANT_ID, COLUMN_RATER_ID, COLUMN_RESTAURANT_ID,
-                RestaurantEntry.TABLE_NAME, RestaurantEntry._ID, COLUMN_RATER_ID, UserEntry.TABLE_NAME, UserEntry._ID);
+        String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + COLUMN_RESTAURANT_ID + " INTEGER,"
+                + COLUMN_RATER_ID + " INTEGER,"
+                + COLUMN_SERVICE_QUALITY + " TEXT,"
+                + COLUMN_FOOD_QUALITY + " TEXT,"
+                + COLUMN_AVERAGE_PRICE + " REAL,"
+                + COLUMN_STARS + " TEXT,"
+                + String.format("PRIMARY KEY (%s, %s),", COLUMN_RESTAURANT_ID, COLUMN_RATER_ID)
+                + String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", COLUMN_RESTAURANT_ID, RestaurantEntry.TABLE_NAME, RestaurantEntry._ID)
+                + String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", COLUMN_RATER_ID, UserEntry.TABLE_NAME, UserEntry._ID) + ");";
         String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }
