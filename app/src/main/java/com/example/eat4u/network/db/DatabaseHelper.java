@@ -14,7 +14,7 @@ import com.example.eat4u.network.db.DatabaseContract.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "eat4u.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,15 +42,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         restaurantValues.put(RestaurantEntry.COLUMN_NAME, restaurant.getName());
         restaurantValues.put(RestaurantEntry.COLUMN_ADDRESS, restaurant.getAddress());
 
-        Long newRestaurantId = db.insert(RestaurantEntry.TABLE_NAME, null, restaurantValues);
+        db.insert(RestaurantEntry.TABLE_NAME, null, restaurantValues);
     }
 
     public void saveUser(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserEntry._ID, user.getId());
+        values.put(UserEntry.COLUMN_FIRSTNAME, user.getFirstname());
+        values.put(UserEntry.COLUMN_LASTNAME, user.getLastname());
+        values.put(UserEntry.COLUMN_EMAIL, user.getEmail());
+        values.put(UserEntry.COLUMN_PHONE, user.getPhone());
 
+        db.insert(UserEntry.TABLE_NAME, null, values);
     }
 
-    public void saveRestaurantRating(Long restaurantId, RestaurantRating rating) {
+    public void addRating(Long restaurantId, RestaurantRating rating) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(RestaurantRatingEntry.COLUMN_RESTAURANT_ID, restaurantId);
+        values.put(RestaurantRatingEntry.COLUMN_RATER_ID, rating.getRater().getId());
+        values.put(RestaurantRatingEntry.COLUMN_FOOD_QUALITY, rating.getFoodQuality().toString());
+        values.put(RestaurantRatingEntry.COLUMN_SERVICE_QUALITY, rating.getServiceQuality().toString());
+        values.put(RestaurantRatingEntry.COLUMN_AVERAGE_PRICE, rating.getAveragePrice());
+        values.put(RestaurantRatingEntry.COLUMN_STARS, rating.getStars().toString());
 
+        db.insert(RestaurantRatingEntry.TABLE_NAME, null, values);
     }
 
 
