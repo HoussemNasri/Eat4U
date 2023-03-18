@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+
+
 android {
     namespace 'com.example.eat4u'
     compileSdk 33
@@ -36,6 +38,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    debugImplementation 'com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:v1.0.6'
 }
