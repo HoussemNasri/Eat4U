@@ -1,25 +1,30 @@
 package com.example.eat4u.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
 public class Restaurant {
     private final Long id;
     private final String name;
     private final String address;
 
-    private final List<RestaurantRating> ratings = new ArrayList<>();
+    private final Location exactLocation;
 
-    public Restaurant(Long id, String name, String address, List<RestaurantRating> ratings) {
+    private final float reviewsCount;
+
+    private final float reviewsAverage;
+
+
+    public Restaurant(Long id, String name, String address, Location exactLocation, float reviewsCount, float reviewsAverage) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.ratings.addAll(ratings);
+        this.exactLocation = exactLocation;
+        this.reviewsCount = reviewsCount;
+        this.reviewsAverage = reviewsAverage;
     }
 
     public Restaurant(Long id, String name, String address) {
-        this(id, name, address, Collections.emptyList());
+        this(id, name, address, null, 0, 0.0f);
     }
 
     public Long getId() {
@@ -34,8 +39,16 @@ public class Restaurant {
         return address;
     }
 
-    public List<RestaurantRating> getRatings() {
-        return Collections.unmodifiableList(ratings);
+    public Optional<Location> getExactLocation() {
+        return Optional.ofNullable(exactLocation);
+    }
+
+    public float getReviewsCount() {
+        return reviewsCount;
+    }
+
+    public float getReviewsAverage() {
+        return reviewsAverage;
     }
 }
 

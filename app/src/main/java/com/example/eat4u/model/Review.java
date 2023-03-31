@@ -1,6 +1,6 @@
 package com.example.eat4u.model;
 
-public class RestaurantRating {
+public class Review {
     private final Quality foodQuality;
     private final Quality serviceQuality;
     private final Stars stars;
@@ -8,7 +8,7 @@ public class RestaurantRating {
     private final User rater;
 
 
-    public RestaurantRating(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice, User rater) {
+    public Review(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice, User rater) {
         this.foodQuality = foodQuality;
         this.serviceQuality = serviceQuality;
         this.stars = stars;

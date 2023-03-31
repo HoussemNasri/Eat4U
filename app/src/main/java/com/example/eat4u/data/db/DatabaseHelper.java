@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.eat4u.model.Restaurant;
-import com.example.eat4u.model.RestaurantRating;
+import com.example.eat4u.model.Review;
 import com.example.eat4u.model.User;
 import com.example.eat4u.data.db.DatabaseContract.*;
 
@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(UserEntry.TABLE_NAME, null, values);
     }
 
-    public void addRating(Long restaurantId, RestaurantRating rating) {
+    public void addRating(Long restaurantId, Review rating) {
         ContentValues values = new ContentValues();
         values.put(RestaurantRatingEntry.COLUMN_RESTAURANT_ID, restaurantId);
         values.put(RestaurantRatingEntry.COLUMN_RATER_ID, rating.getRater().getId());

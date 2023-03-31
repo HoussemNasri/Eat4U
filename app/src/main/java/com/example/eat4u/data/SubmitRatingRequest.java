@@ -1,4 +1,4 @@
 package com.example.eat4u.data;
 
-public class RateRequest {
+public class SubmitRatingRequest {
 }

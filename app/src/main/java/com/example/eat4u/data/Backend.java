@@ -17,7 +17,7 @@ public interface Backend {
      * @param restaurantId the id of the restaurant to rate
      * @return {@code True} if the operator succeed, and {@code False} otherwise
      */
-    boolean rate(Long restaurantId, RateRequest rateDTO);
+    boolean rate(Long restaurantId, SubmitRatingRequest rateDTO);
 
     /**
      * Authenticate user and provide an authentication token for further secure client/server communication.
