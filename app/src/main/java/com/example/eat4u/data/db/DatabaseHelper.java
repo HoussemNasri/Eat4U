@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.eat4u.model.Photo;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.Review;
 import com.example.eat4u.model.User;
@@ -14,7 +15,7 @@ import com.example.eat4u.data.db.DatabaseContract.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "eat4u.db";
-    public static final int DATABASE_VERSION = 2;
+    public static int DATABASE_VERSION = 2;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,14 +25,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(UserEntry.SQL_CREATE_TABLE);
         db.execSQL(RestaurantEntry.SQL_CREATE_TABLE);
-        db.execSQL(RestaurantRatingEntry.SQL_CREATE_TABLE);
+        db.execSQL(ReviewEntry.SQL_CREATE_TABLE);
+        db.execSQL(PhotoEntry.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(RestaurantRatingEntry.DROP_TABLE);
+        db.execSQL(ReviewEntry.DROP_TABLE);
         db.execSQL(UserEntry.SQL_DROP_TABLE);
         db.execSQL(RestaurantEntry.SQL_DROP_TABLE);
+        db.execSQL(PhotoEntry.DROP_TABLE);
         onCreate(db);
     }
 
@@ -59,15 +62,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addRating(Long restaurantId, Review rating) {
         ContentValues values = new ContentValues();
-        values.put(RestaurantRatingEntry.COLUMN_RESTAURANT_ID, restaurantId);
-        values.put(RestaurantRatingEntry.COLUMN_RATER_ID, rating.getRater().getId());
-        values.put(RestaurantRatingEntry.COLUMN_FOOD_QUALITY, rating.getFoodQuality().toString());
-        values.put(RestaurantRatingEntry.COLUMN_SERVICE_QUALITY, rating.getServiceQuality().toString());
-        values.put(RestaurantRatingEntry.COLUMN_AVERAGE_PRICE, rating.getAveragePrice());
-        values.put(RestaurantRatingEntry.COLUMN_STARS, rating.getStars().toString());
+        values.put(ReviewEntry.COLUMN_RESTAURANT_ID, restaurantId);
+        values.put(ReviewEntry.COLUMN_RATER_ID, rating.getRater().getId());
+        values.put(ReviewEntry.COLUMN_FOOD_QUALITY, rating.getFoodQuality().toString());
+        values.put(ReviewEntry.COLUMN_SERVICE_QUALITY, rating.getServiceQuality().toString());
+        values.put(ReviewEntry.COLUMN_AVERAGE_PRICE, rating.getAveragePrice());
+        values.put(ReviewEntry.COLUMN_STARS, rating.getStars().toString());
 
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(RestaurantRatingEntry.TABLE_NAME, null, values);
+        db.insert(ReviewEntry.TABLE_NAME, null, values);
+    }
+
+    /**
+     * Calling this method will clear the database and feed it mock data
+     */
+    public void reset() {
+        onUpgrade(getWritableDatabase(), DATABASE_VERSION, DATABASE_VERSION + 1);
+        DATABASE_VERSION++;
+
     }
 
 
