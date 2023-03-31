@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/rating_editor_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp">
+
+            <TextView
+                android:id="@+id/restaurant_to_rate_name_text"
+                style="@style/TextAppearance.Material3.DisplayMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The Best Restaurant" />
+
+            <TextView
+                android:id="@+id/rating_last_edited_text"
+                style="@style/TextAppearance.Material3.LabelMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/restaurant_to_rate_name_text"
+                android:layout_marginTop="6dp"
+                android:text="Last Edited March 20, 2022" />
+
+            <LinearLayout
+                android:id="@+id/service_quality_rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rating_last_edited_text"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/service_quality_rating_label"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Service Quality" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="6dp"
+                    android:numStars="4"
+                    android:paddingBottom="0dp"
+                    android:rating="3.5"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:stepSize="10"
+                    android:transformPivotX="-10dp" />
+
+                <TextView
+                    android:id="@+id/service_quality_rating_feedback_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Excellent"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/food_quality_rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/service_quality_rating_layout"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/food_quality_rating_label"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Food Quality" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:stepSize="10"
+                    android:layout_marginTop="6dp"
+                    android:numStars="4"
+                    android:rating="3.5"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:transformPivotX="-10dp"
+                    android:layout_gravity="left"
+                    android:foregroundGravity="left" />
+
+                <TextView
+                    android:id="@+id/food_quality_rating_feedback_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Good"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/stars_rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/food_quality_rating_layout"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/stars_rating_label"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Stars" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:stepSize="10"
+                    android:layout_marginTop="6dp"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:transformPivotX="-10dp"
+                    android:layout_gravity="left"
+                    android:foregroundGravity="left"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/average_price_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/stars_rating_layout"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/average_price_label"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Average Price" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="What is the average cost of food there?">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/rating_editor_root"
+        android:text="Submit Rating"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        android:paddingVertical="16dp"
+        android:textSize="24sp"
+        app:layout_anchorGravity="bottom" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

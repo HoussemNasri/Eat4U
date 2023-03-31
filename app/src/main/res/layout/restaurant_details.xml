@@ -87,7 +87,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom"
         android:layout_margin="16dp"
         app:layout_anchor="@id/main_restaurant_layout"
         android:text="Rate"
