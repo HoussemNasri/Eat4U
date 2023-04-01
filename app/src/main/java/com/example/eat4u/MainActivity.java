@@ -1,22 +1,23 @@
 package com.example.eat4u;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.example.eat4u.backend.Backend;
+import com.example.eat4u.backend.LocalBackend;
 import com.example.eat4u.backend.db.DatabaseHelper;
 
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
-    // Use this flag to forcefully resetting the database and repopulating it with mock data
+    // Use this flag to forcefully reset the database and repopulating it with mock data
     private static boolean shouldResetDatabase = false;
     private static Logger LOGGER = Logger.getLogger(MainActivity.class.getSimpleName());
-    private DrawerLayout drawer;
-    private Toolbar toolbar;
+
+    private RecyclerView restaurantsRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
                     return null;
                 }
             }.execute();
+
+            Backend backend = new LocalBackend(getApplicationContext());
+
+            restaurantsRecyclerView = findViewById(R.id.restaurants_recycler_view);
+
         }
     }
 }

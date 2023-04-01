@@ -1,7 +1,13 @@
 package com.example.eat4u.backend;
 
+import android.content.Context;
+import android.os.AsyncTask;
+
+import com.example.eat4u.backend.db.DatabaseHelper;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantList;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,16 +18,17 @@ import java.util.Optional;
  * A mock implementation of the backend server that stores data in a local sqlite database
  */
 public class LocalBackend implements Backend {
-    private static final List<Restaurant> restaurants = new ArrayList<>();
+    private final Context context;
+    private final DatabaseHelper databaseHelper;
 
-    static {
-        // Load JSON file containing restaurants data and initialize the local backend state
-        restaurants.add(null);
+    public LocalBackend(@NotNull Context context) {
+        this.context = context;
+        this.databaseHelper = new DatabaseHelper(context);
     }
 
     @Override
     public RestaurantList getRestaurants() {
-        return new RestaurantList(Collections.unmodifiableList(restaurants));
+        return null;
     }
 
     @Override

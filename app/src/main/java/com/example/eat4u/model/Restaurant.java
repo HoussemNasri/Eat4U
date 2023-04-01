@@ -7,16 +7,10 @@ public class Restaurant {
     private final Long id;
     private final String name;
     private final String address;
-
     private final Location exactLocation;
-
     private final float reviewsCount;
-
     private final float reviewsAverage;
-
     private final PhotoAlbum photoAlbum;
-
-
     public Restaurant(Long id, String name, String address, Location exactLocation, float reviewsCount, float reviewsAverage, PhotoAlbum photoAlbum) {
         this.id = id;
         this.name = name;
