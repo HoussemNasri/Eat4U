@@ -1,4 +1,4 @@
-package com.example.eat4u.data.db;
+package com.example.eat4u.backend.db;
 
 import android.provider.BaseColumns;
 
@@ -26,12 +26,14 @@ public interface DatabaseContract {
         String COLUMN_LASTNAME = "lastname";
         String COLUMN_EMAIL = "email";
         String COLUMN_PHONE = "phone";
+        String COLUMN_AVATAR_URL = "avatar_url";
 
         String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + _ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_FIRSTNAME + " TEXT,"
                 + COLUMN_LASTNAME + " TEXT,"
                 + COLUMN_EMAIL + " TEXT,"
+                + COLUMN_AVATAR_URL + " TEXT,"
                 + COLUMN_PHONE + " TEXT);";
 
         String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -68,6 +70,7 @@ public interface DatabaseContract {
 
         String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + _ID + " INTEGER AUTO INCREMENT PRIMARY KEY,"
+                + COLUMN_FOR_RESTAURANT + " INTEGER,"
                 + COLUMN_URL + " TEXT,"
                 + String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", COLUMN_FOR_RESTAURANT, RestaurantEntry.TABLE_NAME, RestaurantEntry._ID)
                 + ");";

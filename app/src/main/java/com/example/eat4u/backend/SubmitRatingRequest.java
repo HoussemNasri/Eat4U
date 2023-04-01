@@ -1,4 +1,4 @@
-package com.example.eat4u.data;
+package com.example.eat4u.backend;
 
 public class SubmitRatingRequest {
 }

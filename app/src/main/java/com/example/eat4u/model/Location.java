@@ -17,6 +17,10 @@ public class Location {
         return latitude;
     }
 
+    public static Location of(String longitude, String latitude) {
+        return new Location(longitude, latitude);
+    }
+
     public float computeDistanceToTargetInMeters(Location target) {
         return 12f;
     }

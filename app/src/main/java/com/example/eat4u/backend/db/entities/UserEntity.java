@@ -1,6 +1,6 @@
-package com.example.eat4u.model;
+package com.example.eat4u.backend.db.entities;
 
-public class User {
+public class UserEntity {
     private final Long id;
     private final String firstname;
     private final String lastname;
@@ -9,7 +9,7 @@ public class User {
 
     private final String avatar;
 
-    public User(Long id, String firstname, String lastname, String email, String phone, String avatar) {
+    public UserEntity(Long id, String firstname, String lastname, String email, String phone, String avatar) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
