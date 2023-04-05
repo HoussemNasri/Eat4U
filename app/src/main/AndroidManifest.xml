@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Eat4U"
         tools:targetApi="31">
         <activity
-            android:name=".RestaurantDetailsActivity"
+            android:name=".ui.restaurant_details.RestaurantDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"

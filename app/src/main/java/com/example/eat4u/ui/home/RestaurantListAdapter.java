@@ -24,10 +24,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     private final Context context;
     private RestaurantList restaurantList;
+    private RestaurantItemClickedListener restaurantItemClickedListener;
 
-    public RestaurantListAdapter(Context context, @NotNull RestaurantList restaurantList) {
+    public RestaurantListAdapter(Context context, @NotNull RestaurantList restaurantList, RestaurantItemClickedListener restaurantItemClickedListener) {
         this.context = context;
         this.restaurantList = Objects.requireNonNull(restaurantList);
+        this.restaurantItemClickedListener = restaurantItemClickedListener;
     }
 
     @NonNull
@@ -47,6 +49,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         holder.restaurantDistanceTextView.setText(String.format("%dm", new Random().nextInt(1000)));
         restaurant.getThumbnail().ifPresent(thumbnail -> {
             Glide.with(context).load(thumbnail.getUrl()).into(holder.restaurantImageView);
+        });
+
+        holder.itemView.setOnClickListener(e -> {
+            if (restaurantItemClickedListener != null) {
+                restaurantItemClickedListener.onRestaurantItemClicked(restaurant);
+                System.out.println("Clicked!");
+            }
         });
 
     }
@@ -75,5 +84,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             restaurantStarsTextView = itemView.findViewById(R.id.restaurant_stars_text);
             restaurantDistanceTextView = itemView.findViewById(R.id.restaurant_relative_location_text);
         }
+    }
+
+    @FunctionalInterface
+    public interface RestaurantItemClickedListener {
+        void onRestaurantItemClicked(Restaurant restaurant);
     }
 }

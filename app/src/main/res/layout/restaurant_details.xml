@@ -38,7 +38,7 @@
             android:text="The Best Restaurant" />
 
         <TextView
-            android:id="@+id/restaurant_description"
+            android:id="@+id/restaurant_description_text"
             style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:id="@+id/ratings_title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/restaurant_description"
+            android:layout_below="@id/restaurant_description_text"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
