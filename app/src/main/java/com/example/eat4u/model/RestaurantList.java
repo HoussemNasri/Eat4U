@@ -19,4 +19,8 @@ public class RestaurantList {
     public List<Restaurant> getRestaurants() {
         return Collections.unmodifiableList(restaurants);
     }
+
+    public static RestaurantList empty() {
+        return new RestaurantList();
+    }
 }

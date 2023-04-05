@@ -1,6 +1,5 @@
 package com.example.eat4u.model;
 
-import java.util.Collections;
 import java.util.Optional;
 
 public class Restaurant {
@@ -11,18 +10,20 @@ public class Restaurant {
     private final float reviewsCount;
     private final float reviewsAverage;
     private final PhotoAlbum photoAlbum;
-    public Restaurant(Long id, String name, String address, Location exactLocation, float reviewsCount, float reviewsAverage, PhotoAlbum photoAlbum) {
+    private final String description;
+    public Restaurant(Long id, String name, String address, String description, Location exactLocation, float reviewsCount, float reviewsAverage, PhotoAlbum photoAlbum) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.description = description;
         this.exactLocation = exactLocation;
         this.reviewsCount = reviewsCount;
         this.reviewsAverage = reviewsAverage;
         this.photoAlbum = photoAlbum;
     }
 
-    public Restaurant(Long id, String name, String address) {
-        this(id, name, address, null, 0, 0.0f, PhotoAlbum.empty());
+    public Restaurant(Long id, String name, String address, String description) {
+        this(id, name, address, description, null, 0, 0.0f, PhotoAlbum.empty());
     }
 
     public Long getId() {
@@ -35,6 +36,10 @@ public class Restaurant {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Optional<Location> getExactLocation() {
@@ -51,6 +56,10 @@ public class Restaurant {
 
     public PhotoAlbum getPhotoAlbum() {
         return photoAlbum;
+    }
+
+    public Optional<Photo> getThumbnail() {
+        return getPhotoAlbum().stream().findFirst();
     }
 }
 

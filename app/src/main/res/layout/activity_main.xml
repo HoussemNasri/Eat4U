@@ -5,7 +5,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.home.HomeActivity"
     android:background="@color/white">
 
     <LinearLayout
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             app:titleTextColor="@android:color/white"
             android:background="@android:color/transparent"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp">
 
             <RelativeLayout
@@ -42,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:text="Search for restaurants"
+                    android:text="Search for Restaurants"
                     android:layout_toRightOf="@id/hamburger"
                     android:layout_centerVertical="true"/>
 

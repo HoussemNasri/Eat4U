@@ -21,12 +21,13 @@ import com.example.eat4u.model.Stars;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final Logger LOGGER = Logger.getLogger(DatabaseHelper.class.getSimpleName());
     public static final String DATABASE_NAME = "eat4u.db";
-    public static int DATABASE_VERSION = 2;
+    public static int DATABASE_VERSION = 8;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,8 +86,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private RestaurantEntity readRestaurantRow(Cursor cursor) {
-        // TODO: implement this!
-        throw new UnimplementedException();
+        return new RestaurantEntity(
+                cursor.getLong(cursor.getColumnIndexOrThrow(RestaurantEntry._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_NAME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_ADDRESS)));
     }
 
     public void storeUser(UserEntity user) {
@@ -127,6 +131,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int countRestaurantReviews(Long restaurantId) {
+        // TODO: Implement properly
+        return new Random().nextInt(3000);
+    }
+
+    public float computeRestaurantReviewsAverage(Long restaurantId) {
+        return new Random().nextFloat() * 5;
+    }
+
     private void storePhoto(PhotoEntity photo) {
         ContentValues values = new ContentValues();
         values.put(PhotoEntry._ID, photo.getId());
@@ -140,6 +153,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (PhotoEntity photo : photos) {
             storePhoto(photo);
         }
+    }
+
+    public List<PhotoEntity> getRestaurantPhotos(Long restaurantId) {
+        Cursor cursor = getReadableDatabase().rawQuery(String.format("SELECT * FROM %s", PhotoEntry.TABLE_NAME), null);
+
+        boolean isTableEmpty = !cursor.moveToFirst();
+        if (isTableEmpty) {
+            return Collections.emptyList();
+        }
+
+        List<PhotoEntity> result = new ArrayList<>();
+        result.add(readPhotoEntityRow(cursor));
+
+        while (cursor.moveToNext()) {
+            result.add(readPhotoEntityRow(cursor));
+        }
+
+        return result;
+    }
+
+    private PhotoEntity readPhotoEntityRow(Cursor cursor) {
+        return new PhotoEntity(
+                cursor.getLong(cursor.getColumnIndexOrThrow(PhotoEntry._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(PhotoEntry.COLUMN_URL)),
+                cursor.getLong(cursor.getColumnIndexOrThrow(PhotoEntry.COLUMN_FOR_RESTAURANT)));
     }
 
     /**

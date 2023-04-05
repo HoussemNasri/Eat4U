@@ -1,5 +1,6 @@
 package com.example.eat4u.backend;
 
+import com.example.eat4u.model.PhotoAlbum;
 import com.example.eat4u.model.RestaurantList;
 
 import java.util.Optional;
@@ -28,5 +29,6 @@ public interface Backend {
      */
     Optional<AuthenticationResponse> authenticate(AuthenticationRequest authenticationRequest);
 
+    PhotoAlbum getRestaurantPhotos(Long restaurantId);
 
 }
