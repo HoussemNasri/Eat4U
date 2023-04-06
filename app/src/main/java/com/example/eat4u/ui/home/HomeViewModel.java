@@ -18,7 +18,6 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<RestaurantList> getRestaurantsList() {
         new LoadRestaurantsTask(backend, restaurants -> _restaurantsLiveData.setValue(restaurants)).execute();
-
         return _restaurantsLiveData;
     }
 

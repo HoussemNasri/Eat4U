@@ -63,7 +63,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         holder.itemView.setOnClickListener(e -> {
             if (restaurantItemClickedListener != null) {
                 restaurantItemClickedListener.onRestaurantItemClicked(restaurant);
-                System.out.println("Clicked!");
             }
         });
 
