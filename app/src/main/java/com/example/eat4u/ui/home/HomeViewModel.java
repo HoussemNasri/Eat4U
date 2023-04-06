@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.eat4u.backend.Backend;
-import com.example.eat4u.backend.LoadRestaurantsTask;
+import com.example.eat4u.backend.tasks.LoadRestaurantsTask;
 import com.example.eat4u.model.RestaurantList;
 
 public class HomeViewModel extends ViewModel {

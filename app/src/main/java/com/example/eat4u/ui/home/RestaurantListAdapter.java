@@ -1,6 +1,7 @@
 package com.example.eat4u.ui.home;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.eat4u.R;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantList;
@@ -48,7 +55,9 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         holder.restaurantStarsTextView.setText(String.format("%.1f (%d reviews)", new Random().nextDouble() * 5, new Random().nextInt(999)));
         holder.restaurantDistanceTextView.setText(String.format("%dm", new Random().nextInt(1000)));
         restaurant.getThumbnail().ifPresent(thumbnail -> {
-            Glide.with(context).load(thumbnail.getUrl()).into(holder.restaurantImageView);
+            Glide.with(context).load(thumbnail.getUrl())
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(holder.restaurantImageView);
         });
 
         holder.itemView.setOnClickListener(e -> {

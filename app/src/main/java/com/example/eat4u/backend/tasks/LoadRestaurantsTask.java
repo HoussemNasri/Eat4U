@@ -1,7 +1,9 @@
-package com.example.eat4u.backend;
+package com.example.eat4u.backend.tasks;
 
 import android.os.AsyncTask;
 
+import com.example.eat4u.backend.Backend;
+import com.example.eat4u.backend.DataCallback;
 import com.example.eat4u.model.RestaurantList;
 
 public class LoadRestaurantsTask extends AsyncTask<Void, Void, RestaurantList> {

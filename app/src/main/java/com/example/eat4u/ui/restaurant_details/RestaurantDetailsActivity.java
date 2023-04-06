@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.eat4u.R;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.utils.Globals;
+import com.example.eat4u.utils.StringUtils;
 import com.smarteist.autoimageslider.SliderView;
 
 public class RestaurantDetailsActivity extends AppCompatActivity {
@@ -32,7 +33,16 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                System.out.println(getIntent().getParcelableExtra(Globals.RESTAURANT_EXTRA, Restaurant.class).getName());
+                restaurant = getIntent().getParcelableExtra(Globals.RESTAURANT_EXTRA, Restaurant.class);
+                restaurantNameTextView.setText(restaurant.getName());
+                if (StringUtils.isNotBlank(restaurant.getDescription())) {
+                    restaurantDescriptionTextView.setText(restaurant.getDescription());
+                } else {
+                    restaurantDescriptionTextView.setText("Description not provided.");
+                }
+
+                RestaurantPhotosAdapter restaurantPhotosAdapter = new RestaurantPhotosAdapter(restaurant.getPhotoAlbum(), this);
+                restaurantPhotosSlider.setSliderAdapter(restaurantPhotosAdapter);
             }
         }
 
