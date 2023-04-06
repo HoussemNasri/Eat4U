@@ -31,10 +31,41 @@
                 android:text="Last Edited March 20, 2022" />
 
             <LinearLayout
-                android:id="@+id/service_quality_rating_layout"
+                android:id="@+id/average_price_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rating_last_edited_text"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/average_price_label"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Average Price" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="What is the average cost of food there?">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/average_price_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:inputType="numberDecimal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/service_quality_rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/average_price_layout"
                 android:layout_marginTop="24dp"
                 android:orientation="vertical">
 
@@ -132,34 +163,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/average_price_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_below="@id/stars_rating_layout"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:id="@+id/average_price_label"
-                    style="@style/TextAppearance.Material3.TitleLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Average Price" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="What is the average cost of food there?">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/average_price_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
+                />
 
         </RelativeLayout>
     </ScrollView>

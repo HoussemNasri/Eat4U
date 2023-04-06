@@ -19,7 +19,7 @@ public class ReviewEditorViewModel extends ViewModel {
     private MutableLiveData<Quality> foodQualityLiveData = new MutableLiveData<>();
     private MutableLiveData<Quality> serviceQualityLiveData = new MutableLiveData<>();
     private MutableLiveData<Stars> starsLiveData = new MutableLiveData<>();
-    private MutableLiveData<Double> averagePrice = new MutableLiveData<>();
+    private MutableLiveData<Double> averagePriceLiveData = new MutableLiveData<>();
     private MutableLiveData<Restaurant> restaurantLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> reviewSubmissionStatusLiveData = new MutableLiveData<>();
     private final WebClient webClient;
@@ -33,6 +33,7 @@ public class ReviewEditorViewModel extends ViewModel {
             foodQualityLiveData.setValue(review.getFoodQuality());
             serviceQualityLiveData.setValue(review.getServiceQuality());
             starsLiveData.setValue(review.getStars());
+            averagePriceLiveData.setValue(review.getAveragePrice());
         });
     }
 
@@ -40,7 +41,7 @@ public class ReviewEditorViewModel extends ViewModel {
         User currentUser = preferenceStorage.getCurrentUser().get();
         new GetReviewTask(webClient, currentUser.getId(), restaurantId, review -> {
             if (review == null) {
-                reviewLiveData.setValue(new Review(Quality.POOR, Quality.POOR, Stars.ZERO, 0.0d, null));
+                reviewLiveData.setValue(new Review(Quality.POOR, Quality.POOR, Stars.ZERO, 0.0, null));
             } else {
                 reviewLiveData.setValue(review);
             }
@@ -72,11 +73,14 @@ public class ReviewEditorViewModel extends ViewModel {
     }
 
     public LiveData<Double> getAveragePriceLiveData() {
-        return averagePrice;
+        return averagePriceLiveData;
     }
 
     public void setAveragePrice(Double value) {
-        averagePrice.setValue(value);
+        if (value.equals(averagePriceLiveData.getValue())) {
+            return;
+        }
+        averagePriceLiveData.setValue(value);
     }
 
     public void setRestaurant(Restaurant restaurant) {
@@ -88,7 +92,7 @@ public class ReviewEditorViewModel extends ViewModel {
                 foodQualityLiveData.getValue(),
                 serviceQualityLiveData.getValue(),
                 starsLiveData.getValue(),
-                reviewLiveData.getValue().getAveragePrice(),
+                averagePriceLiveData.getValue(),
                 null
         ),
                 restaurantLiveData.getValue().getId(), reviewSubmissionStatusLiveData::setValue).execute();

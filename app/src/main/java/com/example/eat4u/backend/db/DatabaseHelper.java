@@ -274,8 +274,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         PhotoEntity p2 = new PhotoEntity(2222L, "https://media-cdn.tripadvisor.com/media/photo-m/1280/24/8a/64/1c/ambience.jpg", 222L);
         PhotoEntity p3 = new PhotoEntity(3333L, "https://media-cdn.tripadvisor.com/media/photo-o/15/7a/f4/02/pago-balcony.jpg", 333L);
         PhotoEntity p4 = new PhotoEntity(4444L, "https://media-cdn.tripadvisor.com/media/photo-o/15/7a/f4/02/pago-balcony.jpg", 111L);
+        PhotoEntity p5 = new PhotoEntity(5555L, "https://media-cdn.tripadvisor.com/media/photo-o/0c/df/a0/0b/getlstd-property-photo.jpg", 111L);
+        PhotoEntity p6 = new PhotoEntity(6666L, "https://media-cdn.tripadvisor.com/media/photo-m/1280/27/c3/60/e2/kumari-bake-and-brew.jpg", 111L);
+        PhotoEntity p7 = new PhotoEntity(7777L, "https://media-cdn.tripadvisor.com/media/photo-o/21/52/14/fe/justus-steakhouse-ciwalk.jpg", 222L);
+        PhotoEntity p8 = new PhotoEntity(8888L, "https://media-cdn.tripadvisor.com/media/photo-m/1280/24/8a/65/59/ambience.jpg", 222L);
 
-        storePhotos(p1, p2, p3, p4);
+        storePhotos(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
 

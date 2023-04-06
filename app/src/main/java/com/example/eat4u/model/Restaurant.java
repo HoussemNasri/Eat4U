@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class Restaurant implements Parcelable {
     private final Long id;
@@ -82,7 +83,10 @@ public class Restaurant implements Parcelable {
     }
 
     public Optional<Photo> getThumbnail() {
-        return getPhotoAlbum().stream().findFirst();
+        if (!getPhotoAlbum().isEmpty()) {
+            return Optional.of(getPhotoAlbum().get(new Random().nextInt(getPhotoAlbum().size())));
+        }
+        return Optional.empty();
     }
 
     @Override

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.example.eat4u.model.Stars;
 import com.example.eat4u.prefs.MockPreferenceStorage;
 import com.example.eat4u.prefs.PreferenceStorage;
 import com.example.eat4u.utils.Globals;
+import com.example.eat4u.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class ReviewEditorActivity extends AppCompatActivity {
@@ -42,6 +45,26 @@ public class ReviewEditorActivity extends AppCompatActivity {
         serviceQualityRatingBar = findViewById(R.id.service_qualty_rating_bar);
         starsRatingBar = findViewById(R.id.stars_rating_bar);
         averagePriceEditText = findViewById(R.id.average_price_edit_text);
+
+        averagePriceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (averagePriceEditText.getText() != null &&
+                        StringUtils.isBlankOrNull(averagePriceEditText.getText().toString())) {
+                    viewModel.setAveragePrice(0d);
+                }
+                viewModel.setAveragePrice(Double.valueOf(averagePriceEditText.getText().toString()));
+            }
+
+        });
 
         WebClient webClient = WebClientInitializer.getInstance();
         PreferenceStorage preferenceStorage = new MockPreferenceStorage();
@@ -93,6 +116,11 @@ public class ReviewEditorActivity extends AppCompatActivity {
 
         viewModel.getStarsLiveData().observe(this, stars -> {
             starsRatingBar.setRating(stars.getInt());
+        });
+
+        viewModel.getAveragePriceLiveData().observe(this, averagePrice -> {
+            System.out.println("Average Price: " + averagePrice);
+            averagePriceEditText.setText(averagePrice == null ? 0+"" : averagePrice.toString());
         });
 
         foodQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
