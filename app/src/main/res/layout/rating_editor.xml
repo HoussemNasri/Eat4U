@@ -171,6 +171,7 @@
         android:layout_margin="16dp"
         app:layout_anchor="@id/rating_editor_root"
         android:text="Submit Review"
+        android:onClick="submitReview"
         android:textAllCaps="false"
         app:cornerRadius="16dp"
         android:paddingVertical="16dp"

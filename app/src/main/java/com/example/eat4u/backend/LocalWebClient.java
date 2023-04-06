@@ -60,8 +60,24 @@ public class LocalWebClient implements WebClient {
     }
 
     @Override
-    public SubmitReviewResponse submitReview(SubmitReviewRequest submitReviewRequest) {
-        return null;
+    public boolean submitReview(SubmitReviewRequest submitReviewRequest) {
+        Optional<User> authenticatedUserOpt = getAuthenticatedUser();
+        if (!authenticatedUserOpt.isPresent()) {
+            return false;
+        }
+
+        User authenticatedUser = authenticatedUserOpt.get();
+
+        databaseHelper.upsertReview(new ReviewEntity(
+                submitReviewRequest.getFoodQuality(),
+                submitReviewRequest.getServiceQuality(),
+                submitReviewRequest.getStars(),
+                submitReviewRequest.getAveragePrice(),
+                authenticatedUser.getId(),
+                submitReviewRequest.getRestaurantId()
+        ));
+
+        return true;
     }
 
     @Override

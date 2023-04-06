@@ -9,8 +9,8 @@ public class LoadRestaurantsTask extends AsyncTask<Void, Void, RestaurantList> {
     private final WebClient WebClient;
     private final DataCallback<RestaurantList> dataCallback;
 
-    public LoadRestaurantsTask(WebClient WebClient, DataCallback<RestaurantList> dataCallback) {
-        this.WebClient = WebClient;
+    public LoadRestaurantsTask(WebClient webClient, DataCallback<RestaurantList> dataCallback) {
+        this.WebClient = webClient;
         this.dataCallback = dataCallback;
     }
 

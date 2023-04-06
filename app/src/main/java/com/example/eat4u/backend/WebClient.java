@@ -34,7 +34,7 @@ public interface WebClient {
      * @param submitReviewRequest encapsulates the parameters of a user review
      * @return {@code True} if the operator succeed, and {@code False} otherwise
      */
-    SubmitReviewResponse submitReview(SubmitReviewRequest submitReviewRequest);
+    boolean submitReview(SubmitReviewRequest submitReviewRequest);
 
     Optional<User> getAuthenticatedUser();
 

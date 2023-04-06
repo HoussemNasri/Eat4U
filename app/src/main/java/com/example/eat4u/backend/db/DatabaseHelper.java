@@ -126,6 +126,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(ReviewEntry.TABLE_NAME, null, values);
     }
 
+    /**
+     * Update or insert the supplied review
+     */
+    public void upsertReview(ReviewEntity review) {
+        if (getReview(review.getRestaurantId(), review.getRaterId()).isPresent()) {
+            getReadableDatabase().delete(ReviewEntry.TABLE_NAME, String.format("%s = ? AND %s = ?",
+                            ReviewEntry.COLUMN_RESTAURANT_ID, ReviewEntry.COLUMN_RATER_ID),
+                    new String[]{review.getRestaurantId().toString(), review.getRaterId().toString()});
+        }
+        storeReview(review);
+    }
+
     public void storeReviews(ReviewEntity... reviews) {
         for (ReviewEntity rev : reviews) {
             storeReview(rev);

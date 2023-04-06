@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.backend.tasks.GetReviewTask;
+import com.example.eat4u.backend.tasks.SubmitReviewTask;
 import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.Review;
 import com.example.eat4u.model.Stars;
 import com.example.eat4u.model.User;
@@ -16,6 +18,9 @@ public class ReviewEditorViewModel extends ViewModel {
     private MutableLiveData<Review> reviewLiveData = new MutableLiveData<>();
     private MutableLiveData<Quality> foodQualityLiveData = new MutableLiveData<>();
     private MutableLiveData<Quality> serviceQualityLiveData = new MutableLiveData<>();
+    private MutableLiveData<Stars> starsLiveData = new MutableLiveData<>();
+    private MutableLiveData<Double> averagePrice = new MutableLiveData<>();
+    private MutableLiveData<Restaurant> restaurantLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> reviewSubmissionStatusLiveData = new MutableLiveData<>();
     private final WebClient webClient;
     private final PreferenceStorage preferenceStorage;
@@ -27,13 +32,13 @@ public class ReviewEditorViewModel extends ViewModel {
         reviewLiveData.observeForever(review -> {
             foodQualityLiveData.setValue(review.getFoodQuality());
             serviceQualityLiveData.setValue(review.getServiceQuality());
+            starsLiveData.setValue(review.getStars());
         });
     }
 
     public void fetchLastSubmittedReview(Long restaurantId) {
         User currentUser = preferenceStorage.getCurrentUser().get();
         new GetReviewTask(webClient, currentUser.getId(), restaurantId, review -> {
-            System.out.println("Fetched Review: " + review);
             if (review == null) {
                 reviewLiveData.setValue(new Review(Quality.POOR, Quality.POOR, Stars.ZERO, 0.0d, null));
             } else {
@@ -46,12 +51,47 @@ public class ReviewEditorViewModel extends ViewModel {
         return foodQualityLiveData;
     }
 
+    public void setFoodQuality(Quality foodQuality) {
+        foodQualityLiveData.setValue(foodQuality);
+    }
+
     public LiveData<Quality> getServiceQualityLiveData() {
         return serviceQualityLiveData;
     }
 
-    public MutableLiveData<Boolean> submitReview() {
+    public void setServiceQuality(Quality serviceQuality) {
+        serviceQualityLiveData.setValue(serviceQuality);
+    }
 
+    public LiveData<Stars> getStarsLiveData() {
+        return starsLiveData;
+    }
+
+    public void setStars(Stars stars) {
+        starsLiveData.setValue(stars);
+    }
+
+    public LiveData<Double> getAveragePriceLiveData() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(Double value) {
+        averagePrice.setValue(value);
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        restaurantLiveData.setValue(restaurant);
+    }
+
+    public MutableLiveData<Boolean> submitReview() {
+        new SubmitReviewTask(webClient, new Review(
+                foodQualityLiveData.getValue(),
+                serviceQualityLiveData.getValue(),
+                starsLiveData.getValue(),
+                reviewLiveData.getValue().getAveragePrice(),
+                null
+        ),
+                restaurantLiveData.getValue().getId(), reviewSubmissionStatusLiveData::setValue).execute();
         return reviewSubmissionStatusLiveData;
     }
 
