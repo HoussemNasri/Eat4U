@@ -92,5 +92,6 @@
         app:cornerRadius="16dp"
         android:paddingVertical="16dp"
         android:textSize="24sp"
-        app:layout_anchorGravity="bottom" />
+        app:layout_anchorGravity="bottom"
+        android:onClick="onRateClicked"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

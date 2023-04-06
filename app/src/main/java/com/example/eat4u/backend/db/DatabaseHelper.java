@@ -21,6 +21,7 @@ import com.example.eat4u.model.Stars;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -129,6 +130,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (ReviewEntity rev : reviews) {
             storeReview(rev);
         }
+    }
+
+    public Optional<ReviewEntity> getReview(Long restaurantId, Long userId) {
+        Cursor cursor = getReadableDatabase().rawQuery(String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1",
+                        ReviewEntry.TABLE_NAME, ReviewEntry.COLUMN_RESTAURANT_ID, ReviewEntry.COLUMN_RATER_ID),
+                new String[]{restaurantId.toString(), userId.toString()});
+
+        boolean isEmpty = !cursor.moveToFirst();
+        if (isEmpty) {
+            return Optional.empty();
+        }
+
+        return Optional.of(readReviewRow(cursor));
+    }
+
+    private ReviewEntity readReviewRow(Cursor cursor) {
+        return new ReviewEntity(
+                Quality.parse(cursor.getString(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_FOOD_QUALITY))),
+                Quality.parse(cursor.getString(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_SERVICE_QUALITY))),
+                Stars.parse(cursor.getString(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_STARS))),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_AVERAGE_PRICE)),
+                cursor.getLong(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_RATER_ID)),
+                cursor.getLong(cursor.getColumnIndexOrThrow(ReviewEntry.COLUMN_RESTAURANT_ID))
+        );
     }
 
     public int countRestaurantReviews(Long restaurantId) {

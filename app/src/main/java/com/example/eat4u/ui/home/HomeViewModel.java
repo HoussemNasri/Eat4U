@@ -4,20 +4,20 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.eat4u.backend.Backend;
+import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.backend.tasks.LoadRestaurantsTask;
 import com.example.eat4u.model.RestaurantList;
 
 public class HomeViewModel extends ViewModel {
     private MutableLiveData<RestaurantList> _restaurantsLiveData = new MutableLiveData<>();
-    private final Backend backend;
+    private final WebClient WebClient;
 
-    public HomeViewModel(Backend backend) {
-        this.backend = backend;
+    public HomeViewModel(WebClient WebClient) {
+        this.WebClient = WebClient;
     }
 
     public LiveData<RestaurantList> getRestaurantsList() {
-        new LoadRestaurantsTask(backend, restaurants -> _restaurantsLiveData.setValue(restaurants)).execute();
+        new LoadRestaurantsTask(WebClient, restaurants -> _restaurantsLiveData.setValue(restaurants)).execute();
         return _restaurantsLiveData;
     }
 

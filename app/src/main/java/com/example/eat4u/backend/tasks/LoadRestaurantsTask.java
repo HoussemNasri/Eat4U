@@ -2,22 +2,21 @@ package com.example.eat4u.backend.tasks;
 
 import android.os.AsyncTask;
 
-import com.example.eat4u.backend.Backend;
-import com.example.eat4u.backend.DataCallback;
+import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.model.RestaurantList;
 
 public class LoadRestaurantsTask extends AsyncTask<Void, Void, RestaurantList> {
-    private final Backend backend;
+    private final WebClient WebClient;
     private final DataCallback<RestaurantList> dataCallback;
 
-    public LoadRestaurantsTask(Backend backend, DataCallback<RestaurantList> dataCallback) {
-        this.backend = backend;
+    public LoadRestaurantsTask(WebClient WebClient, DataCallback<RestaurantList> dataCallback) {
+        this.WebClient = WebClient;
         this.dataCallback = dataCallback;
     }
 
     @Override
     protected RestaurantList doInBackground(Void... voids) {
-        return backend.getRestaurants();
+        return WebClient.getRestaurants();
     }
 
     @Override

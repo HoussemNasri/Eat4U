@@ -4,18 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.eat4u.backend.Backend;
+import com.example.eat4u.backend.WebClient;
 
 public class HomeViewModelFactory implements ViewModelProvider.Factory {
-    private final Backend backend;
+    private final WebClient WebClient;
 
-    public HomeViewModelFactory(Backend backend) {
-        this.backend = backend;
+    public HomeViewModelFactory(WebClient webClient) {
+        this.WebClient = webClient;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new HomeViewModel(backend);
+        return (T) new HomeViewModel(WebClient);
     }
 }

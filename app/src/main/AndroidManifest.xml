@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Eat4U"
         tools:targetApi="31">
         <activity
+            android:name=".ui.review_editor.ReviewEditorActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.restaurant_details.RestaurantDetailsActivity"
             android:exported="false" />
         <activity

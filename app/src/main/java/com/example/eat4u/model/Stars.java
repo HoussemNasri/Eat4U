@@ -6,5 +6,9 @@ public enum Stars {
     TWO,
     THREE,
     FOUR,
-    FIVE
+    FIVE;
+
+    public static Stars parse(String raw) {
+        return Stars.valueOf(raw);
+    }
 }

@@ -4,5 +4,9 @@ public enum Quality {
     EXCELLENT,
     GOOD,
     AVERAGE,
-    POOR
+    POOR;
+
+    public static Quality parse(String raw) {
+        return Quality.valueOf(raw);
+    }
 }

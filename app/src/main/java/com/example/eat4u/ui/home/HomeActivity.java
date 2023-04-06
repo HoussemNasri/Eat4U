@@ -10,8 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.eat4u.R;
-import com.example.eat4u.backend.Backend;
-import com.example.eat4u.backend.LocalBackend;
+import com.example.eat4u.WebClientInitializer;
 import com.example.eat4u.backend.db.DatabaseHelper;
 import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.RestaurantList;
@@ -33,9 +32,9 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        WebClientInitializer.init(getApplicationContext());
 
-        Backend backend = new LocalBackend(this);
-        HomeViewModelFactory homeViewModelFactory = new HomeViewModelFactory(backend);
+        HomeViewModelFactory homeViewModelFactory = new HomeViewModelFactory(WebClientInitializer.getInstance());
 
         homeViewModel = new ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel.class);
 

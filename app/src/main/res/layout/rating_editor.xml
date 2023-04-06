@@ -46,15 +46,15 @@
                     android:text="Service Quality" />
 
                 <RatingBar
+                    android:id="@+id/service_qualty_rating_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginTop="6dp"
                     android:numStars="4"
                     android:paddingBottom="0dp"
-                    android:rating="3.5"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
-                    android:stepSize="10"
+                    android:stepSize="1"
                     android:transformPivotX="-10dp" />
 
                 <TextView
@@ -81,12 +81,12 @@
                     android:text="Food Quality" />
 
                 <RatingBar
+                    android:id="@+id/food_qualty_rating_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:stepSize="10"
+                    android:stepSize="1"
                     android:layout_marginTop="6dp"
                     android:numStars="4"
-                    android:rating="3.5"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
                     android:transformPivotX="-10dp"
@@ -117,12 +117,12 @@
                     android:text="Stars" />
 
                 <RatingBar
+                    android:id="@+id/stars_rating_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:stepSize="10"
+                    android:stepSize="1"
                     android:layout_marginTop="6dp"
                     android:numStars="5"
-                    android:rating="3.5"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
                     android:transformPivotX="-10dp"
@@ -147,13 +147,13 @@
                     android:text="Average Price" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="What is the average cost of food there?">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/average_price_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

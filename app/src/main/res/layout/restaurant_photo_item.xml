@@ -5,7 +5,8 @@
 
     <ImageView
         android:id="@+id/restaurant_photo_image"
-        android:layout_width="600dp"
-        android:layout_height="600dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"/>
 
 </RelativeLayout>

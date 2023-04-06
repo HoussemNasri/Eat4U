@@ -3,12 +3,15 @@ package com.example.eat4u.ui.restaurant_details;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.eat4u.R;
 import com.example.eat4u.model.Restaurant;
+import com.example.eat4u.ui.review_editor.ReviewEditorActivity;
 import com.example.eat4u.utils.Globals;
 import com.example.eat4u.utils.StringUtils;
 import com.smarteist.autoimageslider.SliderView;
@@ -46,5 +49,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void onRateClicked(View view) {
+        Intent intent = new Intent(this, ReviewEditorActivity.class);
+        intent.putExtra(Globals.RESTAURANT_EXTRA, restaurant);
+        startActivity(intent);
     }
 }

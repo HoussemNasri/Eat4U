@@ -1,4 +1,4 @@
-package com.example.eat4u.backend;
+package com.example.eat4u.backend.tasks;
 
 @FunctionalInterface
 public interface DataCallback<T> {
