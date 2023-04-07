@@ -1,32 +1,54 @@
 package com.example.eat4u.backend.db.entities;
 
+import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Stars;
+
 public class RestaurantEntity {
+
     private final Long id;
-    private final String name;
-    private final String description;
-    private final String address;
+    private final String restaurantName;
+    private final String restaurantAddress;
+    private final Quality foodQuality;
+    private final Quality serviceQuality;
+    private final Stars stars;
+    private final Double averagePrice;
 
 
-    public RestaurantEntity(Long id, String name, String description, String address) {
+    public RestaurantEntity(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice, Long id, String restaurantName, String restaurantAddress) {
+        this.foodQuality = foodQuality;
+        this.serviceQuality = serviceQuality;
+        this.stars = stars;
+        this.averagePrice = averagePrice;
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.address = address;
+        this.restaurantName = restaurantName;
+        this.restaurantAddress = restaurantAddress;
     }
 
-    public Long getId() {
+    public Quality getFoodQuality() {
+        return foodQuality;
+    }
+
+    public Quality getServiceQuality() {
+        return serviceQuality;
+    }
+
+    public Stars getStars() {
+        return stars;
+    }
+
+    public Double getAveragePrice() {
+        return averagePrice;
+    }
+
+    public Long geRestauranttId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getAddress() {
-        return address;
+    public String getRestaurantAddress() {
+        return restaurantAddress;
     }
 }

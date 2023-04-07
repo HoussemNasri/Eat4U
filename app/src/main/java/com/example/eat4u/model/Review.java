@@ -5,15 +5,13 @@ public class Review {
     private final Quality serviceQuality;
     private final Stars stars;
     private final Double averagePrice;
-    private final User rater;
 
 
-    public Review(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice, User rater) {
+    public Review(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice) {
         this.foodQuality = foodQuality;
         this.serviceQuality = serviceQuality;
         this.stars = stars;
         this.averagePrice = averagePrice;
-        this.rater = rater;
     }
 
     public Quality getFoodQuality() {
@@ -30,9 +28,5 @@ public class Review {
 
     public Double getAveragePrice() {
         return averagePrice;
-    }
-
-    public User getRater() {
-        return rater;
     }
 }

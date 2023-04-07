@@ -12,39 +12,37 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eat4u.WebClientInitializer;
 import com.example.eat4u.R;
+import com.example.eat4u.backend.LocalWebClient;
 import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.model.Quality;
-import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.Stars;
-import com.example.eat4u.prefs.MockPreferenceStorage;
-import com.example.eat4u.prefs.PreferenceStorage;
 import com.example.eat4u.utils.Globals;
 import com.example.eat4u.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class ReviewEditorActivity extends AppCompatActivity {
-    private Restaurant toReviewRestaurant;
-    private TextView toReviewRestaurantNameTextView;
-    private TextView lastEditedReviewDateTextView;
+    private TextView userNameTextView;
     private RatingBar foodQualityRatingBar;
     private RatingBar serviceQualityRatingBar;
     private RatingBar starsRatingBar;
     private TextInputEditText averagePriceEditText;
+    private TextInputEditText restaurantNameEditText;
+    private TextInputEditText restaurantAddressEditText;
     private ReviewEditorViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rating_editor);
+        setContentView(R.layout.review_editor);
 
-        toReviewRestaurantNameTextView = findViewById(R.id.restaurant_to_rate_name_text);
-        lastEditedReviewDateTextView = findViewById(R.id.rating_last_edited_text);
+        userNameTextView = findViewById(R.id.user_name_textview);
         foodQualityRatingBar = findViewById(R.id.food_qualty_rating_bar);
         serviceQualityRatingBar = findViewById(R.id.service_qualty_rating_bar);
         starsRatingBar = findViewById(R.id.stars_rating_bar);
         averagePriceEditText = findViewById(R.id.average_price_edit_text);
+        restaurantNameEditText = findViewById(R.id.restaurant_name_edittext);
+        restaurantAddressEditText = findViewById(R.id.restaurant_address_edit_text);
 
         averagePriceEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,17 +64,16 @@ public class ReviewEditorActivity extends AppCompatActivity {
 
         });
 
-        WebClient webClient = WebClientInitializer.getInstance();
-        PreferenceStorage preferenceStorage = new MockPreferenceStorage();
-        ReviewEditorViewModelFactory viewModelFactory = new ReviewEditorViewModelFactory(webClient, preferenceStorage);
+        WebClient webClient = new LocalWebClient(this);
+        ReviewEditorViewModelFactory viewModelFactory = new ReviewEditorViewModelFactory(webClient);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(ReviewEditorViewModel.class);
 
         if (getIntent() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                toReviewRestaurant = getIntent().getExtras().getParcelable(Globals.RESTAURANT_EXTRA, Restaurant.class);
-                viewModel.setRestaurant(toReviewRestaurant);
-                viewModel.fetchLastSubmittedReview(toReviewRestaurant.getId());
-                toReviewRestaurantNameTextView.setText(toReviewRestaurant.getName());
+                String userFirstname = getIntent().getStringExtra(Globals.USER_FIRSTNAME_EXTRA);
+                String userLastname = getIntent().getStringExtra(Globals.USER_LASTNAME_EXTRA);
+
+                userNameTextView.setText(userFirstname + " " + userLastname);
             }
         }
 
@@ -119,8 +116,7 @@ public class ReviewEditorActivity extends AppCompatActivity {
         });
 
         viewModel.getAveragePriceLiveData().observe(this, averagePrice -> {
-            System.out.println("Average Price: " + averagePrice);
-            averagePriceEditText.setText(averagePrice == null ? 0+"" : averagePrice.toString());
+            averagePriceEditText.setText(averagePrice == null ? 0 + "" : averagePrice.toString());
         });
 
         foodQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
@@ -137,7 +133,7 @@ public class ReviewEditorActivity extends AppCompatActivity {
     }
 
     public void submitReview(View view) {
-        viewModel.submitReview().observe(this, isSucceed -> {
+        viewModel.submitReview(restaurantNameEditText.getText().toString(), restaurantAddressEditText.getText().toString()).observe(this, isSucceed -> {
             if (isSucceed) {
                 Toast.makeText(this, "Review is submitted successfully", Toast.LENGTH_SHORT).show();
             } else {

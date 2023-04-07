@@ -1,6 +1,7 @@
 package com.example.eat4u.backend.dto;
 
 import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.Review;
 import com.example.eat4u.model.Stars;
 
@@ -10,10 +11,10 @@ public class SubmitReviewRequest {
     private final Quality serviceQuality;
     private final Stars stars;
     private final Double averagePrice;
-    private final Long restaurantId;
+    private final Restaurant restaurant;
 
-    public SubmitReviewRequest(Long restaurantId, Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice) {
-        this.restaurantId = restaurantId;
+    public SubmitReviewRequest(Restaurant restaurant, Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice) {
+        this.restaurant = restaurant;
         this.foodQuality = foodQuality;
         this.serviceQuality = serviceQuality;
         this.stars = stars;
@@ -36,13 +37,13 @@ public class SubmitReviewRequest {
         return averagePrice;
     }
 
-    public Long getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public static SubmitReviewRequest from(Review review, Long restaurantId) {
+    public static SubmitReviewRequest from(Review review, Restaurant restaurant) {
         return new SubmitReviewRequest(
-                restaurantId,
+                restaurant,
                 review.getFoodQuality(),
                 review.getServiceQuality(),
                 review.getStars(),
