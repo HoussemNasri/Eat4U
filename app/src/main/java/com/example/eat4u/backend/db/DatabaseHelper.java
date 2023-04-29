@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final Logger LOGGER = Logger.getLogger(DatabaseHelper.class.getSimpleName());
     public static final String DATABASE_NAME = "eat4u.db";
-    public static int DATABASE_VERSION = 13;
+    public static int DATABASE_VERSION = 16;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
