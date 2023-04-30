@@ -31,10 +31,10 @@ public class ReviewEditorViewModel extends ViewModel {
             this.restaurant = restaurant;
         }
 
-        foodQualityLiveData.setValue(restaurant.getFoodQuality());
-        serviceQualityLiveData.setValue(restaurant.getServiceQuality());
-        starsLiveData.setValue(restaurant.getStars());
-        averagePriceLiveData.setValue(restaurant.getAveragePrice());
+        foodQualityLiveData.setValue(this.restaurant.getFoodQuality());
+        serviceQualityLiveData.setValue(this.restaurant.getServiceQuality());
+        starsLiveData.setValue(this.restaurant.getStars());
+        averagePriceLiveData.setValue(this.restaurant.getAveragePrice());
     }
 
     public LiveData<Quality> getFoodQualityLiveData() {

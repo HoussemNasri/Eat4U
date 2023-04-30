@@ -23,10 +23,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private RestaurantList restaurantList;
     private RestaurantItemClickedListener restaurantItemClickedListener;
 
-    public RestaurantListAdapter(Context context, @NotNull RestaurantList restaurantList, RestaurantItemClickedListener restaurantItemClickedListener) {
+    public RestaurantListAdapter(Context context, RestaurantItemClickedListener restaurantItemClickedListener) {
         this.context = context;
-        this.restaurantList = Objects.requireNonNull(restaurantList);
         this.restaurantItemClickedListener = restaurantItemClickedListener;
+        this.restaurantList = new RestaurantList();
     }
 
     @NonNull
@@ -39,14 +39,14 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Restaurant restaurant = restaurantList.getRestaurants().get(position);
+        Restaurant restaurant = restaurantList.get(position);
 
         if (restaurant.getId() != null) {
             holder.restaurantIdTextView.setText(restaurant.getId().toString());
         }
 
         holder.restaurantTitleTextView.setText(restaurant.getName());
-        holder.restaurantAvgPriceTextView.setText(restaurant.getAveragePrice()+"$");
+        holder.restaurantAvgPriceTextView.setText(restaurant.getAveragePrice() + "$");
 
         holder.itemView.setOnClickListener(e -> {
             if (restaurantItemClickedListener != null) {
@@ -58,7 +58,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public int getItemCount() {
-        return restaurantList.getRestaurants().size();
+        return restaurantList.size();
     }
 
     public void setRestaurantList(RestaurantList restaurants) {
@@ -67,14 +67,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView restaurantIdTextView;
         private TextView restaurantTitleTextView;
         private TextView restaurantAvgPriceTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             restaurantIdTextView = itemView.findViewById(R.id.tv_restaurant_id);
             restaurantTitleTextView = itemView.findViewById(R.id.tv_restaurant_title);
             restaurantAvgPriceTextView = itemView.findViewById(R.id.tv_restaurant_avg_price);

@@ -14,7 +14,7 @@ public class RestaurantEntity {
     private final Double averagePrice;
 
 
-    public RestaurantEntity(Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice, Long id, String restaurantName, String restaurantAddress) {
+    public RestaurantEntity(Long id, String restaurantName, String restaurantAddress, Quality foodQuality, Quality serviceQuality, Stars stars, Double averagePrice) {
         this.foodQuality = foodQuality;
         this.serviceQuality = serviceQuality;
         this.stars = stars;

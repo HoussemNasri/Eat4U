@@ -3,6 +3,7 @@ package com.example.eat4u.ui.review_editor;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +19,10 @@ import com.example.eat4u.UserPreferences;
 import com.example.eat4u.backend.LocalWebClient;
 import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Restaurant;
+import com.example.eat4u.model.RestaurantList;
 import com.example.eat4u.model.Stars;
+import com.example.eat4u.ui.restaurant_list.RestaurantListActivity;
 import com.example.eat4u.utils.BindingsUtils;
 import com.example.eat4u.utils.Globals;
 import com.example.eat4u.utils.StringUtils;
@@ -52,8 +56,12 @@ public class ReviewEditorActivity extends AppCompatActivity {
             userNameTextView.setText(currentUser.getFirstname() + " " + currentUser.getLastname());
         }
 
-        WebClient webClient = new LocalWebClient(this);
-        ReviewEditorViewModelFactory viewModelFactory = new ReviewEditorViewModelFactory(webClient, null);
+
+        Restaurant restaurant = null;
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            restaurant = getIntent().getExtras().getParcelable(Globals.RESTAURANT_EXTRA);
+        }
+        ReviewEditorViewModelFactory viewModelFactory = new ReviewEditorViewModelFactory(new LocalWebClient(this), restaurant);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(ReviewEditorViewModel.class);
 
         BindingsUtils.onTextChanged(averagePriceEditText, (oldAvg, avg) -> {
@@ -64,43 +72,40 @@ public class ReviewEditorActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getFoodQualityLiveData().observe(this, foodQuality -> {
-            updateRatingBar(foodQualityRatingBar, foodQuality);
-        });
+        viewModel.getFoodQualityLiveData().observe(this, foodQuality ->
+                updateRatingBar(foodQualityRatingBar, foodQuality));
 
-        viewModel.getServiceQualityLiveData().observe(this, serviceQuality -> {
-            updateRatingBar(serviceQualityRatingBar, serviceQuality);
-        });
+        viewModel.getServiceQualityLiveData().observe(this, serviceQuality ->
+                updateRatingBar(serviceQualityRatingBar, serviceQuality));
 
-        viewModel.getStarsLiveData().observe(this, stars -> {
-            starsRatingBar.setRating(stars.getInt());
-        });
+        viewModel.getStarsLiveData().observe(this, stars ->
+                starsRatingBar.setRating(stars.getInt()));
 
-        viewModel.getAveragePriceLiveData().observe(this, averagePrice -> {
-            averagePriceEditText.setText(averagePrice == null ? 0 + "" : averagePrice.toString());
-        });
+        viewModel.getAveragePriceLiveData().observe(this, averagePrice ->
+                averagePriceEditText.setText(averagePrice == null ? 0 + "" : averagePrice.toString()));
 
-        foodQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            viewModel.setFoodQuality(Quality.parse((long) rating));
-        });
+        foodQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) ->
+                viewModel.setFoodQuality(Quality.parse((long) rating)));
 
-        serviceQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            viewModel.setServiceQuality(Quality.parse((long) rating));
-        });
+        serviceQualityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) ->
+                viewModel.setServiceQuality(Quality.parse((long) rating)));
 
-        starsRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            viewModel.setStars(Stars.parse((int) rating));
-        });
+        starsRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) ->
+                viewModel.setStars(Stars.parse((int) rating)));
 
-        BindingsUtils.onTextChanged(restaurantNameEditText, (oldName, name) -> viewModel.setRestaurantName(name));
+        BindingsUtils.onTextChanged(restaurantNameEditText, (oldName, name) ->
+                viewModel.setRestaurantName(name));
 
-        BindingsUtils.onTextChanged(restaurantAddressEditText, (oldAddress, address) -> viewModel.setRestaurantAddress(address));
+        BindingsUtils.onTextChanged(restaurantAddressEditText, (oldAddress, address) ->
+                viewModel.setRestaurantAddress(address));
     }
 
     public void submitReview(View view) {
         viewModel.submitReview().observe(this, isSucceed -> {
             if (isSucceed) {
                 Toast.makeText(this, "Review is submitted successfully", Toast.LENGTH_SHORT).show();
+                Intent goToRestaurantsListActivity = new Intent(this, RestaurantListActivity.class);
+                startActivity(goToRestaurantsListActivity);
             } else {
                 Toast.makeText(this, "Review submission failed. Please try again!", Toast.LENGTH_SHORT).show();
             }

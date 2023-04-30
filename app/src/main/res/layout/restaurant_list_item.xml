@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp">
+    android:paddingVertical="8dp"
+    android:background="?selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,8 @@
             android:layout_gravity="bottom"
             android:layout_marginRight="8dp"
             style="@style/TextAppearance.Material3.ActionBar.Subtitle"
-            android:text="12"/>
+            android:text="12"
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/tv_restaurant_title"
             android:layout_width="wrap_content"
@@ -44,13 +46,6 @@
             style="@style/TextAppearance.Material3.DisplayMedium"
             android:textSize="24sp"
             android:layout_gravity="center"/>
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Avg. price"
-            style="@style/TextAppearance.Material3.LabelMedium" />
-
     </LinearLayout>
 
 </LinearLayout>

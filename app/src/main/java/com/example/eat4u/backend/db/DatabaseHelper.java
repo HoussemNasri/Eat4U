@@ -2,6 +2,7 @@ package com.example.eat4u.backend.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -10,6 +11,12 @@ import androidx.annotation.Nullable;
 import com.example.eat4u.backend.db.entities.RestaurantEntity;
 
 import com.example.eat4u.backend.db.DatabaseContract.*;
+import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Stars;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -45,6 +52,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(RestaurantEntry.TABLE_NAME, null, restaurantValues);
+    }
+
+    public List<RestaurantEntity> getAllRestaurants() {
+        Cursor cursor = getReadableDatabase().rawQuery(String.format("SELECT * FROM %s", RestaurantEntry.TABLE_NAME), null);
+
+        boolean isTableEmpty = !cursor.moveToFirst();
+        if (isTableEmpty) {
+            return Collections.emptyList();
+        }
+
+        List<RestaurantEntity> result = new ArrayList<>();
+        result.add(readRestaurantRow(cursor));
+
+        while (cursor.moveToNext()) {
+            result.add(readRestaurantRow(cursor));
+        }
+
+        return result;
+    }
+
+    private RestaurantEntity readRestaurantRow(Cursor cursor) {
+        return new RestaurantEntity(
+                cursor.getLong(cursor.getColumnIndexOrThrow(RestaurantEntry._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_NAME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_ADDRESS)),
+                Quality.parse(cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_FOOD_QUALITY))),
+                Quality.parse(cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_SERVICE_QUALITY))),
+                Stars.parse(cursor.getString(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_STARS))),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(RestaurantEntry.COLUMN_AVERAGE_PRICE))
+        );
     }
 
 }
