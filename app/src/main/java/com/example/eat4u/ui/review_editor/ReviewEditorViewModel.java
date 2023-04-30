@@ -8,28 +8,33 @@ import com.example.eat4u.backend.WebClient;
 import com.example.eat4u.backend.tasks.SubmitReviewTask;
 import com.example.eat4u.model.Quality;
 import com.example.eat4u.model.Restaurant;
-import com.example.eat4u.model.Review;
 import com.example.eat4u.model.Stars;
 
 public class ReviewEditorViewModel extends ViewModel {
-    private MutableLiveData<Review> reviewLiveData = new MutableLiveData<>(new Review(Quality.POOR, Quality.POOR, Stars.ZERO, 0.0));
     private MutableLiveData<Quality> foodQualityLiveData = new MutableLiveData<>();
     private MutableLiveData<Quality> serviceQualityLiveData = new MutableLiveData<>();
     private MutableLiveData<Stars> starsLiveData = new MutableLiveData<>();
     private MutableLiveData<Double> averagePriceLiveData = new MutableLiveData<>();
 
-    private final MutableLiveData<Boolean> reviewSubmissionStatusLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> restaurantNameLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> restaurantAddressLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> reviewSubmissionStatus = new MutableLiveData<>();
     private final WebClient webClient;
+    private final Restaurant restaurant;
 
-    public ReviewEditorViewModel(WebClient webClient) {
+    public ReviewEditorViewModel(WebClient webClient, Restaurant restaurant) {
         this.webClient = webClient;
 
-        reviewLiveData.observeForever(review -> {
-            foodQualityLiveData.setValue(review.getFoodQuality());
-            serviceQualityLiveData.setValue(review.getServiceQuality());
-            starsLiveData.setValue(review.getStars());
-            averagePriceLiveData.setValue(review.getAveragePrice());
-        });
+        if (restaurant == null) {
+            this.restaurant = new Restaurant(-1L, "", "", Quality.POOR, Quality.POOR, Stars.ZERO, 0d);
+        } else {
+            this.restaurant = restaurant;
+        }
+
+        foodQualityLiveData.setValue(restaurant.getFoodQuality());
+        serviceQualityLiveData.setValue(restaurant.getServiceQuality());
+        starsLiveData.setValue(restaurant.getStars());
+        averagePriceLiveData.setValue(restaurant.getAveragePrice());
     }
 
     public LiveData<Quality> getFoodQualityLiveData() {
@@ -67,15 +72,32 @@ public class ReviewEditorViewModel extends ViewModel {
         averagePriceLiveData.setValue(value);
     }
 
-    public MutableLiveData<Boolean> submitReview(String restaurantName, String restaurantAddress) {
-        new SubmitReviewTask(webClient, new Review(
-                foodQualityLiveData.getValue(),
-                serviceQualityLiveData.getValue(),
-                starsLiveData.getValue(),
-                averagePriceLiveData.getValue()
-        ),
-                new Restaurant(restaurantName, restaurantAddress), reviewSubmissionStatusLiveData::setValue).execute();
-        return reviewSubmissionStatusLiveData;
+    public LiveData<String> getRestaurantNameLiveData() {
+        return restaurantAddressLiveData;
+    }
+
+    public void setRestaurantName(String name) {
+        restaurantNameLiveData.setValue(name);
+    }
+
+    public LiveData<String> getRestaurantAddressLiveData() {
+        return restaurantAddressLiveData;
+    }
+
+    public void setRestaurantAddress(String address) {
+        restaurantAddressLiveData.setValue(address);
+    }
+
+    public MutableLiveData<Boolean> submitReview() {
+        restaurant.setAveragePrice(averagePriceLiveData.getValue());
+        restaurant.setFoodQuality(foodQualityLiveData.getValue());
+        restaurant.setServiceQuality(serviceQualityLiveData.getValue());
+        restaurant.setStars(starsLiveData.getValue());
+        restaurant.setName(restaurantNameLiveData.getValue());
+        restaurant.setAddress(restaurantAddressLiveData.getValue());
+
+        new SubmitReviewTask(webClient, restaurant, reviewSubmissionStatus::setValue).execute();
+        return reviewSubmissionStatus;
     }
 
 }

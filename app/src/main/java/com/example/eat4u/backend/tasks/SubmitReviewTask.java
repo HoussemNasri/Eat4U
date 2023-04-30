@@ -9,20 +9,18 @@ import com.example.eat4u.model.Review;
 
 public class SubmitReviewTask extends AsyncTask<Void, Void, Boolean> {
     private final WebClient webClient;
-    private final Review review;
     private final Restaurant restaurant;
     private final DataCallback<Boolean> submissionStatusCallback;
 
-    public SubmitReviewTask(WebClient webClient, Review review, Restaurant restaurant, DataCallback<Boolean> submissionStatusCallback) {
+    public SubmitReviewTask(WebClient webClient, Restaurant restaurant, DataCallback<Boolean> submissionStatusCallback) {
         this.webClient = webClient;
-        this.review = review;
         this.restaurant = restaurant;
         this.submissionStatusCallback = submissionStatusCallback;
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
-       return webClient.submitReview(SubmitReviewRequest.from(review, restaurant));
+       return webClient.submitReview(restaurant);
     }
 
     @Override

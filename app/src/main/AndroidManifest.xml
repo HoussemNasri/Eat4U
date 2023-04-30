@@ -12,8 +12,11 @@
         android:theme="@style/Theme.Eat4U"
         tools:targetApi="31">
         <activity
+            android:name=".RestaurantListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.authentication.AuthenticationActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

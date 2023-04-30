@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.eat4u.R;
+import com.example.eat4u.User;
+import com.example.eat4u.UserPreferences;
 import com.example.eat4u.ui.review_editor.ReviewEditorActivity;
 import com.example.eat4u.utils.Globals;
 import com.example.eat4u.utils.StringUtils;
@@ -42,8 +44,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 .allMatch(StringUtils::isNotBlank);
         if (isValidInput) {
             Intent goToReviewEditorIntent = new Intent(this, ReviewEditorActivity.class);
-            goToReviewEditorIntent.putExtra(Globals.USER_FIRSTNAME_EXTRA, firstnameEditText.getText().toString());
-            goToReviewEditorIntent.putExtra(Globals.USER_LASTNAME_EXTRA, lastnameEditText.getText().toString());
+            UserPreferences.saveUser(new User(firstnameEditText.getText().toString(), lastnameEditText.getText().toString()));
             finish();
             startActivity(goToReviewEditorIntent);
         } else {

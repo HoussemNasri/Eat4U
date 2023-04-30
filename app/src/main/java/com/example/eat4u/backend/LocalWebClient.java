@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.eat4u.backend.db.DatabaseHelper;
 import com.example.eat4u.backend.db.entities.RestaurantEntity;
 import com.example.eat4u.backend.dto.SubmitReviewRequest;
+import com.example.eat4u.model.Restaurant;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,15 +20,17 @@ public class LocalWebClient implements WebClient {
     }
 
     @Override
-    public boolean submitReview(SubmitReviewRequest submitReviewRequest) {
-        databaseHelper.storeRestaurant(new RestaurantEntity(
-                submitReviewRequest.getFoodQuality(),
-                submitReviewRequest.getServiceQuality(),
-                submitReviewRequest.getStars(),
-                submitReviewRequest.getAveragePrice(),
-                submitReviewRequest.getRestaurant().getId(),
-                submitReviewRequest.getRestaurant().getName(),
-                submitReviewRequest.getRestaurant().getAddress()));
+    public boolean submitReview(Restaurant restaurant) {
+        databaseHelper.storeRestaurant(
+                new RestaurantEntity(
+                        restaurant.getFoodQuality(),
+                        restaurant.getServiceQuality(),
+                        restaurant.getStars(),
+                        restaurant.getAveragePrice(),
+                        restaurant.getId(),
+                        restaurant.getName(),
+                        restaurant.getAddress())
+        );
 
         return true;
     }
