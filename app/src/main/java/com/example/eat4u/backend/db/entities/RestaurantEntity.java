@@ -40,7 +40,7 @@ public class RestaurantEntity {
         return averagePrice;
     }
 
-    public Long geRestauranttId() {
+    public Long geRestaurantId() {
         return id;
     }
 

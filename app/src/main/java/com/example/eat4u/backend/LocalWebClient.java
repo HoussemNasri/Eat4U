@@ -23,7 +23,7 @@ public class LocalWebClient implements WebClient {
 
     @Override
     public boolean submitReview(Restaurant restaurant) {
-        databaseHelper.storeRestaurant(
+        databaseHelper.upsertRestaurant(
                 new RestaurantEntity(
                         restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getFoodQuality(),
                         restaurant.getServiceQuality(),
@@ -39,7 +39,7 @@ public class LocalWebClient implements WebClient {
     public RestaurantList loadRestaurants() {
         return new RestaurantList(databaseHelper.getAllRestaurants().stream().map(entity ->
                 new Restaurant(
-                        entity.geRestauranttId(),
+                        entity.geRestaurantId(),
                         entity.getRestaurantName(),
                         entity.getRestaurantAddress(),
                         entity.getFoodQuality(),

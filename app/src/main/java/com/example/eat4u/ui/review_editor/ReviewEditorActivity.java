@@ -56,7 +56,6 @@ public class ReviewEditorActivity extends AppCompatActivity {
             userNameTextView.setText(currentUser.getFirstname() + " " + currentUser.getLastname());
         }
 
-
         Restaurant restaurant = null;
         if (getIntent() != null && getIntent().getExtras() != null) {
             restaurant = getIntent().getExtras().getParcelable(Globals.RESTAURANT_EXTRA);
@@ -71,6 +70,12 @@ public class ReviewEditorActivity extends AppCompatActivity {
                 viewModel.setAveragePrice(Double.valueOf(avg));
             }
         });
+
+        viewModel.getRestaurantNameLiveData().observe(this, name ->
+                restaurantNameEditText.setText(name));
+
+        viewModel.getRestaurantAddressLiveData().observe(this, address ->
+                restaurantAddressEditText.setText(address));
 
         viewModel.getFoodQualityLiveData().observe(this, foodQuality ->
                 updateRatingBar(foodQualityRatingBar, foodQuality));
@@ -105,6 +110,7 @@ public class ReviewEditorActivity extends AppCompatActivity {
             if (isSucceed) {
                 Toast.makeText(this, "Review is submitted successfully", Toast.LENGTH_SHORT).show();
                 Intent goToRestaurantsListActivity = new Intent(this, RestaurantListActivity.class);
+                finish();
                 startActivity(goToRestaurantsListActivity);
             } else {
                 Toast.makeText(this, "Review submission failed. Please try again!", Toast.LENGTH_SHORT).show();

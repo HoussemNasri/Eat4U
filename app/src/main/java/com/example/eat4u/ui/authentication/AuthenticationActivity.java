@@ -11,7 +11,6 @@ import com.example.eat4u.R;
 import com.example.eat4u.User;
 import com.example.eat4u.UserPreferences;
 import com.example.eat4u.ui.review_editor.ReviewEditorActivity;
-import com.example.eat4u.utils.Globals;
 import com.example.eat4u.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -44,7 +43,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 .allMatch(StringUtils::isNotBlank);
         if (isValidInput) {
             Intent goToReviewEditorIntent = new Intent(this, ReviewEditorActivity.class);
-            UserPreferences.saveUser(new User(firstnameEditText.getText().toString(), lastnameEditText.getText().toString()));
+            UserPreferences.setCurrentUser(new User(firstnameEditText.getText().toString(), lastnameEditText.getText().toString()));
             finish();
             startActivity(goToReviewEditorIntent);
         } else {

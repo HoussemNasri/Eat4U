@@ -12,11 +12,13 @@ import com.example.eat4u.backend.db.entities.RestaurantEntity;
 
 import com.example.eat4u.backend.db.DatabaseContract.*;
 import com.example.eat4u.model.Quality;
+import com.example.eat4u.model.Restaurant;
 import com.example.eat4u.model.Stars;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -52,6 +54,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(RestaurantEntry.TABLE_NAME, null, restaurantValues);
+    }
+
+    /**
+     * Update the restaurant if it exists and insert it if it doesn't
+     * TODO: needs optimization!
+     */
+    public void upsertRestaurant(RestaurantEntity restaurant) {
+        if (getRestaurantById(restaurant.geRestaurantId()).isPresent()) {
+            deleteRestaurantWithId(restaurant.geRestaurantId());
+        }
+        storeRestaurant(restaurant);
+    }
+
+    public Optional<RestaurantEntity> getRestaurantById(Long restaurantId) {
+        Cursor cursor = getReadableDatabase().rawQuery(String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1",
+                        RestaurantEntry.TABLE_NAME, RestaurantEntry._ID),
+                new String[]{restaurantId.toString()});
+
+        boolean isEmpty = !cursor.moveToFirst();
+        if (isEmpty) {
+            return Optional.empty();
+        }
+
+        return Optional.of(readRestaurantRow(cursor));
+    }
+
+    public void deleteRestaurantWithId(Long restaurantId) {
+        if (restaurantId == null) {
+            throw new IllegalArgumentException("Cannot delete restaurant with a null id");
+        }
+        getWritableDatabase().delete(RestaurantEntry.TABLE_NAME, RestaurantEntry._ID + "= ?",
+                new String[]{restaurantId.toString()});
     }
 
     public List<RestaurantEntity> getAllRestaurants() {

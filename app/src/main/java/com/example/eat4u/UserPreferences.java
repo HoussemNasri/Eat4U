@@ -1,13 +1,13 @@
 package com.example.eat4u;
 
 public class UserPreferences {
-    private static User _user;
+    private static User currentUser;
 
-    public static void saveUser(User user) {
-        _user = user;
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
     public static User getCurrentUser() {
-        return _user;
+        return currentUser;
     }
 }

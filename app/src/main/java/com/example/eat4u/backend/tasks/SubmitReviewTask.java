@@ -3,9 +3,7 @@ package com.example.eat4u.backend.tasks;
 import android.os.AsyncTask;
 
 import com.example.eat4u.backend.WebClient;
-import com.example.eat4u.backend.dto.SubmitReviewRequest;
 import com.example.eat4u.model.Restaurant;
-import com.example.eat4u.model.Review;
 
 public class SubmitReviewTask extends AsyncTask<Void, Void, Boolean> {
     private final WebClient webClient;

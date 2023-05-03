@@ -14,7 +14,10 @@ public class RestaurantListViewModel extends ViewModel {
 
     public RestaurantListViewModel(WebClient webClient) {
         this.webClient = webClient;
+        refetchRestaurants();
+    }
 
+    public void refetchRestaurants() {
         new LoadRestaurantsTask(webClient, restaurantListLiveData::setValue).execute();
     }
 

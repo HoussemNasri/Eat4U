@@ -31,6 +31,8 @@ public class ReviewEditorViewModel extends ViewModel {
             this.restaurant = restaurant;
         }
 
+        restaurantNameLiveData.setValue(this.restaurant.getName());
+        restaurantAddressLiveData.setValue(this.restaurant.getAddress());
         foodQualityLiveData.setValue(this.restaurant.getFoodQuality());
         serviceQualityLiveData.setValue(this.restaurant.getServiceQuality());
         starsLiveData.setValue(this.restaurant.getStars());
@@ -73,11 +75,13 @@ public class ReviewEditorViewModel extends ViewModel {
     }
 
     public LiveData<String> getRestaurantNameLiveData() {
-        return restaurantAddressLiveData;
+        return restaurantNameLiveData;
     }
 
     public void setRestaurantName(String name) {
-        restaurantNameLiveData.setValue(name);
+        if (name != null && !name.equals(restaurantNameLiveData.getValue())) {
+            restaurantNameLiveData.setValue(name);
+        }
     }
 
     public LiveData<String> getRestaurantAddressLiveData() {
@@ -85,7 +89,9 @@ public class ReviewEditorViewModel extends ViewModel {
     }
 
     public void setRestaurantAddress(String address) {
-        restaurantAddressLiveData.setValue(address);
+        if (address != null && !address.equals(restaurantAddressLiveData.getValue())) {
+            restaurantAddressLiveData.setValue(address);
+        }
     }
 
     public MutableLiveData<Boolean> submitReview() {

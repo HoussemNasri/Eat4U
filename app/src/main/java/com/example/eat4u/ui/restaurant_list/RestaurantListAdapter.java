@@ -54,6 +54,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             }
         });
 
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(context.getColor(R.color.wheat));
+        } else {
+            holder.itemView.setBackgroundColor(context.getColor(R.color.white));
+        }
+
     }
 
     @Override
@@ -64,6 +70,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void setRestaurantList(RestaurantList restaurants) {
         this.restaurantList = restaurants;
         notifyDataSetChanged();
+    }
+
+    public RestaurantList getRestaurantList() {
+        return restaurantList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
